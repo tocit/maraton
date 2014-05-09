@@ -7,7 +7,7 @@
   }
 
   .bar rect {
-    fill: steelblue;
+    fill: yellowgreen;
     shape-rendering: crispEdges;
   }
 
@@ -26,8 +26,7 @@
   <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
   <script>
 
-  // Generate a log-normal distribution with a median of 30 minutes.
-  var values = d3.range(1000).map(d3.random.logNormal(Math.log(30), .4));
+d3.json("vysledky2013.json", function (data2) {
 
   // Formatters for counts and times (converting numbers to Dates).
   var formatCount = d3.format(",.0f"),
@@ -39,22 +38,25 @@
       height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.linear()
-      .domain([0, 120])
+      .domain([125, 425])
       .range([0, width]);
 
   // Generate a histogram using twenty uniformly-spaced bins.
-  var data = d3.layout.histogram()
-      .bins(x.ticks(20))
-      (values);
+  var histogramGenerator = d3.layout.histogram()
+      .bins(x.ticks(60))
+      .value(function(x) {return x.c;});
+      
+  var histogramData = histogramGenerator(data2);
 
   var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return d.y; })])
+      .domain([0, d3.max(data2, function(d) { return d.c; })])
       .range([height, 0]);
 
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
-      .tickFormat(formatMinutes);
+      .tickFormat(formatMinutes)
+      .tickValues(([150,180,210,240,270,300,330,360,390]));
 
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -63,21 +65,24 @@
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var bar = svg.selectAll(".bar")
-      .data(data)
+      .data(histogramData)
     .enter().append("g")
       .attr("class", "bar")
       .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+  
+  console.log(histogramData);
 
   bar.append("rect")
       .attr("x", 1)
-      .attr("width", x(data[0].dx) - 1)
+      .attr("width", 960/60-2)
       .attr("height", function(d) { return height - y(d.y); });
 
   bar.append("text")
       .attr("dy", ".75em")
-      .attr("y", 6)
-      .attr("x", x(data[0].dx) / 2)
+      .attr("y", 4)
+      .attr("x", function(d) {return x(d.x); })
       .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90, 0, 0)")
       .text(function(d) { return formatCount(d.y); });
 
   svg.append("g")
@@ -85,4 +90,6 @@
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis);
 
-  </script>
+      });
+
+</script>
