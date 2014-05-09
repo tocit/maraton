@@ -1,0 +1,11 @@
+vysledky  <- data.frame(cas=as.difftime(cas, "%X", units="secs"),
+                        cas_cip=as.difftime(cas_cip, "%X", units="secs"),
+                        cislo,
+                        jmeno,
+                        kategorie,
+                        klub,
+                        narodnost,
+                        tempo=as.difftime(tempo, "%X", units="secs"),
+                        umisteni_celkove=as.numeric(umisteni_celkove),
+                        umisteni_kategorie=as.numeric(umisteni_kategorie),
+                        umisteni_pohlavi=as.numeric(umisteni_pohlavi))
