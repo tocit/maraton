@@ -10,6 +10,11 @@
     shape-rendering: crispEdges;
   }
 
+
+  rect:hover {
+    fill: darkgrey;
+  }
+
   .axis path, .axis line {
     fill: none;
     stroke: #000;
@@ -124,7 +129,7 @@
 
 
 
-d3.json("vysledky2013.json", function (data) {
+d3.json("vysledky2013_cip.json", function (data) {
       
   var collection = new PourOver.Collection(data);
   
@@ -181,12 +186,12 @@ d3.json("vysledky2013.json", function (data) {
       height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.linear()
-      .domain([125, 425])
+      .domain([125, 415])
       .range([0, width]);
 
   // Generate a histogram using twenty uniformly-spaced bins.
   var histogramGenerator = d3.layout.histogram()
-      .bins(x.ticks(60))
+      .bins(x.ticks(58))
       .value(function(x) {return x.c;});
       
   var histogramData = histogramGenerator(data);
@@ -195,7 +200,6 @@ d3.json("vysledky2013.json", function (data) {
       .domain([0, d3.max(histogramData, function(d) { return d.length; })])
       .range([height, 0]);
 
-      console.log(histogramData);
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
@@ -226,7 +230,7 @@ d3.json("vysledky2013.json", function (data) {
   
   bar.append("rect")
       .attr("x", 1)
-      .attr("width", width/60-1)
+      .attr("width", width/58-1)
       .attr("height", function(d) { return height - y(d.y); })
       .attr("fill", "orange");
 

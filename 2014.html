@@ -10,6 +10,10 @@
     shape-rendering: crispEdges;
   }
 
+  rect:hover {
+    fill: darkgrey;
+  }
+
   .axis path, .axis line {
     fill: none;
     stroke: #000;
@@ -193,7 +197,6 @@ d3.json("vysledky2014.json", function (data) {
       .domain([0, d3.max(histogramData, function(d) { return d.length; })])
       .range([height, 0]);
 
-      console.log(histogramData);
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
