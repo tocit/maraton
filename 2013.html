@@ -115,6 +115,7 @@
   <span>Japonci</span>
   </div>
 
+
   <script src="underscore-min.js"></script>
   <script src="pourover.js"></script>
   <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
@@ -123,31 +124,32 @@
 
 
 
-d3.json("vysledky2014.json", function (data) {
+d3.json("vysledky2013.json", function (data) {
       
   var collection = new PourOver.Collection(data);
   
   // filtry
-  var k_filter = PourOver.makeExactFilter("k", [ "AMF", "AMM", "MF35", "MF40", "MF45", "MF50", "MF55", "MF60+", "MM40", "MM45", "MM50", "MM55", "MM60", "MM65+" ]);
+  var k_filter = PourOver.makeExactFilter("k", [ "M40", "M45", "M50", "M55", "M60", "M65", "MAM", "REL", "W35", "W40", "W45", "W50", "W55", "W60", "WAM" ]);
   
-  var n_filter = PourOver.makeExactFilter("n", [ "AFG", "ALA", "ARG", "AUS", "AUT", "AZE", "BEL", "BLR", "BRA", "BUL", "CAN", "CAT", "COL", "CPV", "CRO", "CXR", "CZE", "DEN", "ESP", "EST", "ETH", "FIN", "FRA", "FSM", "GBR", "GER", "GRE", "GUA", "HKG", "HUN", "CHI", "CHN", "IND", "IRL", "ISR", "ITA", "JPN", "KEN", "KOR", "LAT", "LIB", "LIE", "LUX", "MAR", "MAS", "MEX", "NED", "NOR", "NZL", "PHI", "POL", "POR", "QAT", "ROU", "RSA", "RUS", "SEN", "SHN", "SIN", "SLO", "SRB", "SUI", "SVK", "SWE", "TPE", "TUR", "UKR", "USA", "VEN", "VIE", "ZIM" ]);
+  var n_filter = PourOver.makeExactFilter("n", [ "AFG", "ALG", "AND", "ARG", "AUS", "AUT", "BDI", "BEL", "BLR", "BOL", "BRA", "BUL", "CAN", "CAT", "COL", "CPV", "CRC", "CRO", "CZE", "DEN", "ECU", "EGY", "ERI", "ESP", "EST", "ETH", "FIN", "FRA", "GBR", "GER", "GRE", "GUA", "HKG", "HUN", "CHI", "CHN", "IND", "IRL", "ISR", "ITA", "JPN", "KAZ", "KEN", "KOR", "KSA", "LAT", "LTU", "LUX", "MAD", "MAS", "MEX", "NED", "NOR", "NZL", "PER", "PHI", "POL", "POR", "QAT", "ROU", "RSA", "RUS", "SIN", "SLO", "SRB", "SRI", "SUI", "SVK", "SWE", "THA", "TJK", "TPE", "TUR", "UKR", "URU", "USA", "VEN", "VIE", "ZIM" ]);
   
   collection.addFilters([k_filter, n_filter]);
   
-  var MAM = collection.filters.k.getFn("AMM");
-  var M40 = collection.filters.k.getFn("MM40");
-  var M45 = collection.filters.k.getFn("MM45");
-  var M50 = collection.filters.k.getFn("MM50");
-  var M55 = collection.filters.k.getFn("MM55");
-  var M60 = collection.filters.k.getFn("MM60");
-  var M65 = collection.filters.k.getFn("MM65+");
-  var WAM = collection.filters.k.getFn("AMF");
-  var W35 = collection.filters.k.getFn("MF35");
-  var W40 = collection.filters.k.getFn("MF40");
-  var W45 = collection.filters.k.getFn("MF45");
-  var W50 = collection.filters.k.getFn("MF50");
-  var W55 = collection.filters.k.getFn("MF55");
-  var W60 = collection.filters.k.getFn("MF60+");
+  var MAM = collection.filters.k.getFn("MAM");
+  var M40 = collection.filters.k.getFn("M40");
+  var M45 = collection.filters.k.getFn("M45");
+  var M50 = collection.filters.k.getFn("M50");
+  var M55 = collection.filters.k.getFn("M55");
+  var M60 = collection.filters.k.getFn("M60");
+  var M65 = collection.filters.k.getFn("M65");
+  var REL = collection.filters.k.getFn("REL");
+  var WAM = collection.filters.k.getFn("WAM");
+  var W35 = collection.filters.k.getFn("W35");
+  var W40 = collection.filters.k.getFn("W40");
+  var W45 = collection.filters.k.getFn("W45");
+  var W50 = collection.filters.k.getFn("W50");
+  var W55 = collection.filters.k.getFn("W55");
+  var W60 = collection.filters.k.getFn("W60");
   var muzi = MAM.or(M40).or(M45).or(M50).or(M55).or(M60).or(M65);
   var zeny = WAM.or(W35).or(W40).or(W45).or(W50).or(W55).or(W60);
   var nad60 = M65.or(M60).or(W60);
@@ -179,12 +181,12 @@ d3.json("vysledky2014.json", function (data) {
       height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.linear()
-      .domain([125, 410])
+      .domain([125, 425])
       .range([0, width]);
 
   // Generate a histogram using twenty uniformly-spaced bins.
   var histogramGenerator = d3.layout.histogram()
-      .bins(x.ticks(57))
+      .bins(x.ticks(60))
       .value(function(x) {return x.c;});
       
   var histogramData = histogramGenerator(data);
@@ -224,9 +226,9 @@ d3.json("vysledky2014.json", function (data) {
   
   bar.append("rect")
       .attr("x", 1)
-      .attr("width", width/57-1)
+      .attr("width", width/60-1)
       .attr("height", function(d) { return height - y(d.y); })
-      .attr("fill", "steelblue");
+      .attr("fill", "orange");
 
   bar.append("text")
       .attr("x", function(d) {

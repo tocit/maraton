@@ -14,7 +14,7 @@
         umisteni_pohlavi  <- character()
         
         
-        for (i in 3645:12500) {
+        for (i in 1:12500) {
                 url  <- paste("http://www.runczechresults.com/cs/Results/ResultDetail?BIB=", i, "&rid=10", sep="")
                 
                 html  <- htmlTreeParse(url, useInternalNodes=TRUE, encoding="utf-8")

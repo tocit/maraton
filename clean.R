@@ -24,8 +24,21 @@ export  <- data.frame(vysledky$cas, vysledky$kategorie, vysledky$narodnost)
 
 export  <- export[export$vysledky.cas>0, ]
 
+export  <- export[export$vysledky.kategorie!="REL", ]
+
 export$vysledky.cas  <- as.numeric(export$vysledky.cas)
 
 names(export)  <- c("c", "k", "n")
 
+export$c  <- export$c/60
+
 writeLines(toJSON(export), "vysledky2013.json")
+
+summary(export)
+
+
+writeLines(toJSON(levels(export$n)), "filtr1.txt")
+
+vysledky2013  <- fromJSON("vysledky2013.json")
+
+vysledky2013[vysledky2013$k=="REL", ]
