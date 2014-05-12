@@ -44,14 +44,14 @@
     color: white;
   }
 
-  #kontejner {
-    width: 970px;
-    height: 20px;
-    float: none;
+  .kontejner {
+    float : left;
+    clear : left;
   }
 
   </style>
   <body>
+ <div class="kontejner">
   <div class="button selected" id="vsichni">
   <span>všichni</span>
   </div>
@@ -61,8 +61,9 @@
   <div class="button" id="zeny">
   <span>ženy</span>
   </div>
-<br>
-<br>
+
+</div>
+<div class="kontejner">
   <div class="button" id="do40">
   <span>do 40 let</span>
   </div>
@@ -81,8 +82,8 @@
   <div class="button" id="nad60">
   <span>nad 60 let</span>
   </div>
-<br>
-<br>
+</div>
+<div class="kontejner">
   <div class="button" id="CZE">
   <span>Češi</span>
   </div>
@@ -119,7 +120,7 @@
   <div class="button" id="JPN">
   <span>Japonci</span>
   </div>
-
+</div>
 
   <script src="underscore-min.js"></script>
   <script src="pourover.js"></script>
@@ -181,7 +182,7 @@ d3.json("vysledky2013_cip.json", function (data) {
       formatTime = d3.time.format("%H:%M"),
       formatMinutes = function(d) { return formatTime(new Date(2012, 0, 1, 0, d)); };
 
-  var margin = {top: 20, right: 5, bottom: 20, left: 5},
+  var margin = {top: 20, right: 0, bottom: 20, left: 0},
       width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
