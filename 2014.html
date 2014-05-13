@@ -49,6 +49,16 @@
     clear : left;
   }
 
+  svg {
+    float: left;
+    clear : left;
+  }
+
+  .fallback {
+    float: left;
+    clear : left; 
+  }
+
   </style>
   <body>
  <div class="kontejner">
@@ -122,13 +132,16 @@
   </div>
 </div>
 
+<p class="fallback">
+  Váš prohlížeč je zastaralý a nepodporuje interaktivní vizualizace. Doporučujeme jej aktualizovat, <a target="_blank" href="http://www.browserchoice.eu/">stáhnout jiný</a> nebo použít <a target="_blank" href="http://www.google.com/chromeframe">Google Chrome Frame</a>.</p>
+
   <script src="underscore-min.js"></script>
   <script src="pourover.js"></script>
   <script src="http://d3js.org/d3.v2.min.js?2.10.0"></script>
   <script>
 
 
-
+d3.select(".fallback").remove();
 
 d3.json("vysledky2014.json", function (data) {
       
@@ -181,8 +194,8 @@ d3.json("vysledky2014.json", function (data) {
       formatTime = d3.time.format("%H:%M"),
       formatMinutes = function(d) { return formatTime(new Date(2012, 0, 1, 0, d)); };
 
-  var margin = {top: 20, right: 5, bottom: 20, left: 5},
-      width = 960 - margin.left - margin.right,
+  var margin = {top: 20, right: 20, bottom: 20, left: 25},
+      width = 900 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.linear()
@@ -254,7 +267,7 @@ d3.json("vysledky2014.json", function (data) {
   svg.append("text")
       .text("Vybráno " + data.length + " běžců")
       .attr("y", 20)
-      .attr("x", 720)
+      .attr("x", 650)
       .attr("font-size", "1.6em")
       .attr("id", "pocitadlo")
 
